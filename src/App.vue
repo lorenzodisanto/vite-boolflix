@@ -64,6 +64,11 @@ export default {
         return "./public/img-flag/ndf.png";
       }
     },
+
+    getStar(vote) {
+      vote = vote.toFixed() / 2;
+      return vote;
+    },
   },
 
   components: { AppHeader },
@@ -71,9 +76,9 @@ export default {
 </script>
 
 <template>
-  <!-- search bar -->
   <div class="container">
     <h1 class="text-danger">{{ store.title }}</h1>
+    <!-- search bar -->
     <div class="input-group mb-3">
       <input
         type="text"
@@ -97,25 +102,56 @@ export default {
       <!-- lista ricerca film -->
       <div class="me-5">
         <h2>Lista film</h2>
-        <ul v-for="movie in store.movies">
+        <ul v-for="movie in store.movies" class="p-0">
+          <li>
+            <img :src="store.posterUrl + movie.poster_path" alt="" />
+          </li>
           <li>titolo: {{ movie.title }}</li>
           <li>titolo originale: {{ movie.original_title }}</li>
           <li>
-            lingua: <img :src="getFlag(movie.original_language)" alt="" />
+            lingua:
+            <img :src="getFlag(movie.original_language)" alt="" class="flag" />
           </li>
-          <li>voto: {{ movie.vote_average }}</li>
+          <li>
+            voto:
+            <font-awesome-icon
+              v-for="i in 5"
+              :icon="
+                i <= getStar(movie.vote_average)
+                  ? 'fa-solid fa-star'
+                  : 'fa-regular fa-star'
+              "
+            />
+
+            ({{ movie.vote_average }} / 10)
+          </li>
         </ul>
       </div>
       <!-- lista ricerca serie tv -->
       <div>
         <h2>Lista serie tv</h2>
-        <ul v-for="serie in store.series">
+        <ul v-for="serie in store.series" class="p-0">
+          <li>
+            <img :src="store.posterUrl + serie.poster_path" alt="" />
+          </li>
           <li>titolo: {{ serie.name }}</li>
           <li>titolo originale: {{ serie.original_name }}</li>
           <li>
-            lingua: <img :src="getFlag(serie.original_language)" alt="" />
+            lingua:
+            <img :src="getFlag(serie.original_language)" alt="" class="flag" />
           </li>
-          <li>voto: {{ serie.vote_average }}</li>
+          <li>
+            voto:
+            <font-awesome-icon
+              v-for="i in 5"
+              :icon="
+                i <= getStar(serie.vote_average)
+                  ? 'fa-solid fa-star'
+                  : 'fa-regular fa-star'
+              "
+            />
+            ({{ serie.vote_average }} / 10)
+          </li>
         </ul>
       </div>
     </div>
@@ -124,4 +160,7 @@ export default {
 
 <style lang="scss">
 @use "./styles/general.scss";
+.flag {
+  width: 30px;
+}
 </style>
