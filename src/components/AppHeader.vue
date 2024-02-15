@@ -1,19 +1,16 @@
 <script>
+import { store } from "../store";
 export default {
   data() {
-    return {};
-  },
-
-  methods: {
-    buttonClick() {
-      alert("bottone cliccato");
-    },
+    return {
+      store,
+    };
   },
 };
 </script>
 
 <template>
-  <div class="input-group mb-3">
+  <!-- <div class="input-group mb-3">
     <input
       type="text"
       class="form-control"
@@ -21,15 +18,10 @@ export default {
       aria-label="Scegli film"
       aria-describedby="button"
     />
-    <button
-      class="btn btn-outline-secondary"
-      type="button"
-      id="button"
-      @click="buttonClick()"
-    >
+    <button class="btn btn-outline-secondary" type="button" id="button">
       Search
     </button>
-  </div>
+  </div> -->
 </template>
 
 <style lang="scss" scoped></style>
