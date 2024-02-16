@@ -7,6 +7,10 @@ export default {
     };
   },
 
+  props: {
+    production: Object,
+  },
+
   methods: {
     getFlag(lang) {
       if (lang == "it") {
@@ -37,58 +41,34 @@ export default {
 </script>
 
 <template>
-  <!-- cards film -->
-  <h2 class="mt-5">Elenco Film</h2>
-  <div class="row">
-    <div class="col-3" v-for="movie in store.movies">
-      <div class="card p-2">
-        <img :src="store.posterUrl + movie.poster_path" alt="" />
-        <p>titolo: {{ movie.title }}</p>
-        <p>titolo originale: {{ movie.original_title }}</p>
+  <div>
+    <div class="front">
+      <img :src="store.posterUrl + production.poster" alt="" />
+      <img
+        v-if="!production.poster"
+        src="https://demofree.sirv.com/nope-not-here.jpg"
+        alt=""
+      />
+      <div class="back">
+        <p>titolo: {{ production.title }}</p>
+        <p>titolo originale: {{ production.original_title }}</p>
         <p>
           lingua:
-          <img :src="getFlag(movie.original_language)" alt="" class="flag" />
+          <img :src="getFlag(production.language)" alt="" class="flag" />
         </p>
         <p>
           voto:
           <font-awesome-icon
             v-for="i in 5"
             :icon="
-              i <= getStar(movie.vote_average)
+              i <= getStar(production.vote)
                 ? 'fa-solid fa-star'
                 : 'fa-regular fa-star'
             "
           />
-          ({{ movie.vote_average }} / 10)
+          ({{ production.vote }} / 10)
         </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- cards serie tv -->
-  <h2 class="mt-5">Elenco Serie Tv</h2>
-  <div class="row">
-    <div class="col-3" v-for="serie in store.series">
-      <div class="card p-2">
-        <img :src="store.posterUrl + serie.poster_path" alt="" />
-        <p>titolo: {{ serie.name }}</p>
-        <p>titolo originale: {{ serie.name }}</p>
-        <p>
-          lingua:
-          <img :src="getFlag(serie.original_language)" alt="" class="flag" />
-        </p>
-        <p>
-          voto:
-          <font-awesome-icon
-            v-for="i in 5"
-            :icon="
-              i <= getStar(serie.vote_average)
-                ? 'fa-solid fa-star'
-                : 'fa-regular fa-star'
-            "
-          />
-          ({{ serie.vote_average }} / 10)
-        </p>
+        <p>Descrizione: {{ production.overview }}</p>
       </div>
     </div>
   </div>
@@ -97,5 +77,32 @@ export default {
 <style lang="scss" scoped>
 .flag {
   width: 30px;
+}
+
+img {
+  width: 100%;
+}
+
+.fa-star {
+  color: #ffc800;
+}
+
+.front {
+  position: relative;
+}
+
+.back {
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: none;
+  overflow: auto;
+}
+
+.front:hover .back {
+  display: block;
 }
 </style>

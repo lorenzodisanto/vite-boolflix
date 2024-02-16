@@ -39,7 +39,7 @@ export default {
         />
         <button
           @click="$emit('click-contents')"
-          class="btn btn-outline-secondary"
+          class="btn btn-danger"
           type="button"
           id="button"
         >

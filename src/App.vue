@@ -22,7 +22,17 @@ export default {
         })
         .then((res) => {
           console.log(res.data);
-          store.movies = res.data.results;
+          store.movies = res.data.results.map((movie) => {
+            return {
+              id: movie.id,
+              title: movie.title,
+              original_title: movie.original_title,
+              language: movie.original_language,
+              vote: movie.vote_average,
+              poster: movie.poster_path,
+              overview: movie.overview,
+            };
+          });
         });
     },
 
@@ -36,7 +46,17 @@ export default {
         })
         .then((res) => {
           console.log(res.data);
-          store.series = res.data.results;
+          store.series = res.data.results.map((serie) => {
+            return {
+              id: serie.id,
+              title: serie.name,
+              original_title: serie.original_name,
+              language: serie.original_language,
+              vote: serie.vote_average,
+              poster: serie.poster_path,
+              overview: serie.overview,
+            };
+          });
         });
     },
 
